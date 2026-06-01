@@ -124,6 +124,12 @@ public class RankupPlugin extends JavaPlugin {
     super();
   }
 
+  protected RankupPlugin(PermissionManager permissionManager, EconomyProvider economyProvider) {
+    super();
+    this.permissionManager = permissionManager;
+    this.economyProvider = economyProvider;
+  }
+
   protected RankupPlugin(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file, PermissionManager permissionManager, EconomyProvider economyProvider) {
     super(loader, description, dataFolder, file);
     this.permissionManager = permissionManager;

@@ -1,6 +1,6 @@
 package sh.okx.rankup.ranksgui;
 
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import org.mockbukkit.mockbukkit.entity.PlayerMock;
 import org.bukkit.inventory.Inventory;
 import org.junit.jupiter.api.Test;
 import sh.okx.rankup.RankupTest;

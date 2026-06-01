@@ -1,6 +1,5 @@
 package sh.okx.rankup.ranks;
 
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,6 +10,8 @@ import org.bukkit.entity.Player;
 import sh.okx.rankup.RankupPlugin;
 import sh.okx.rankup.ranks.requirements.RankRequirements;
 import sh.okx.rankup.requirements.Requirement;
+
+import java.util.List;
 
 @EqualsAndHashCode
 @RequiredArgsConstructor(access = AccessLevel.PROTECTED)
@@ -48,6 +49,9 @@ public class Rank {
   public void runCommands(Player player, Rank next) {
     for (String command : commands) {
       String string = plugin.newMessageBuilder(command).replacePlayer(player).replaceOldRank(this).replaceRank(next).toString(player);
+      if (string.isBlank()) {
+          continue;
+      }
       Bukkit.dispatchCommand(Bukkit.getConsoleSender(), string);
     }
   }

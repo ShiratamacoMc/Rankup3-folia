@@ -26,14 +26,14 @@ public class GuiListener implements Listener {
     Player player = (Player) e.getWhoClicked();
     Gui gui = (Gui) inventory.getHolder();
 
-    if (gui.getRankup().isSimilar(e.getCurrentItem())) {
+    if (gui.getNr(e.getSlot()) == Gui.RANKUP_NR) {
       Bukkit.getScheduler().runTask(plugin, player::closeInventory);
       if (gui.isPrestige()) {
         plugin.getHelper().prestige(player);
       } else {
         plugin.getHelper().rankup(player);
       }
-    } else if (gui.getCancel().isSimilar(e.getCurrentItem())) {
+    } else if (gui.getNr(e.getSlot()) == Gui.CANCEL_NR) {
       Bukkit.getScheduler().runTask(plugin, () -> {
         player.closeInventory();
         if (gui.isReturnToRanksGui()) {

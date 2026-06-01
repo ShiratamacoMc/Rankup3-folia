@@ -28,6 +28,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Gui implements InventoryHolder {
 
+  public static int RANKUP_NR = 1;
+  public static int CANCEL_NR = 2;
+
   @Getter
   private final boolean returnToRanksGui;
   @Getter
@@ -38,6 +41,8 @@ public class Gui implements InventoryHolder {
   private ItemStack cancel;
   @Getter
   private boolean prestige;
+
+  private int[] slots;
 
   public static Gui of(Player player, Rank oldRank, Rank rank, RankupPlugin plugin,
       boolean returnToRanksGui) {
@@ -63,12 +68,14 @@ public class Gui implements InventoryHolder {
     ItemStack rankup = getItem(plugin, plugin.getSection(oldRank, basePath + ".rankup"), player,
         oldRank, rank);
 
-    addItem(items, plugin.getSection(oldRank, basePath + ".rankup"), rankup);
-    addItem(items, plugin.getSection(oldRank, basePath + ".cancel"), cancel);
-    addItem(items, plugin.getSection(oldRank, basePath + ".fill"), fill);
+    int[] slots = new int[items.length];
+    addItem(items, plugin.getSection(oldRank, basePath + ".rankup"), rankup, slots, RANKUP_NR);
+    addItem(items, plugin.getSection(oldRank, basePath + ".cancel"), cancel, slots, CANCEL_NR);
+    addItem(items, plugin.getSection(oldRank, basePath + ".fill"), fill, slots, 0);
 
     gui.rankup = rankup;
     gui.cancel = cancel;
+    gui.slots = slots;
 
     Inventory inventory = Bukkit.createInventory(gui, items.length,
         Colour.translate(
@@ -79,6 +86,10 @@ public class Gui implements InventoryHolder {
     inventory.setContents(items);
     gui.inventory = inventory;
     return gui;
+  }
+
+  public int getNr(int slot) {
+    return slots[slot];
   }
 
   public static ItemStack getItem(RankupPlugin plugin, ConfigurationSection section, Player player,
@@ -150,12 +161,13 @@ public class Gui implements InventoryHolder {
     return builder.toString(player);
   }
 
-  private static void addItem(ItemStack[] items, ConfigurationSection section, ItemStack item) {
+  private static void addItem(ItemStack[] items, ConfigurationSection section, ItemStack item, int[] slots, int nr) {
     Objects.requireNonNull(section, "GUI configuration section not found");
     if (section.getName().equalsIgnoreCase("fill")) {
       for (int i = 0; i < items.length; i++) {
         if (items[i] == null) {
           items[i] = item;
+          slots[i] = nr;
         }
       }
       return;
@@ -166,9 +178,11 @@ public class Gui implements InventoryHolder {
       String[] parts = location.split("-");
       if (parts.length == 1) {
         items[Integer.parseInt(parts[0])] = item;
+        slots[Integer.parseInt(parts[0])] = nr;
       } else {
         for (int i = Integer.parseInt(parts[0]); i <= Integer.parseInt(parts[1]); i++) {
           items[i] = item;
+          slots[i] = nr;
         }
       }
     }

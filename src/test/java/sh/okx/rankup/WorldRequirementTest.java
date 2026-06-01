@@ -1,7 +1,7 @@
 package sh.okx.rankup;
 
 
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import org.mockbukkit.mockbukkit.entity.PlayerMock;
 import org.bukkit.Location;
 import org.junit.jupiter.api.Test;
 import sh.okx.rankup.placeholders.RankupExpansion;
