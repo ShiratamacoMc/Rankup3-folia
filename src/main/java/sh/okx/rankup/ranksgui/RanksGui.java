@@ -13,6 +13,7 @@ import sh.okx.rankup.gui.Gui;
 import sh.okx.rankup.ranks.Rank;
 import sh.okx.rankup.ranks.RankElement;
 import sh.okx.rankup.util.Colour;
+import sh.okx.rankup.util.SchedulerUtil;
 
 public class RanksGui {
     private final RankupPlugin plugin;
@@ -111,7 +112,7 @@ public class RanksGui {
         }
         int slot = event.getRawSlot();
         if (slot == rankupSlot) {
-            Bukkit.getScheduler().runTask(plugin, () -> {
+            SchedulerUtil.runEntityTask(plugin, player, () -> {
                 player.closeInventory();
                 Bukkit.dispatchCommand(player, "rankup gui");
             });

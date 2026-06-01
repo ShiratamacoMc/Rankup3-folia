@@ -13,9 +13,8 @@ import sh.okx.rankup.ranks.Rank;
 import sh.okx.rankup.ranks.RankElement;
 import sh.okx.rankup.ranks.Rankups;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Actually performs the ranking up and prestiging for the plugin and also manages the cooldowns
@@ -28,8 +27,9 @@ public class RankupHelper {
   private final GroupProvider permissions;
   /**
    * Players who cannot rankup/prestige for a certain amount of time.
+   * 使用 ConcurrentHashMap 以确保 Folia 多线程环境下的线程安全
    */
-  private final Map<Player, Long> cooldowns = new HashMap<>();
+  private final ConcurrentHashMap<Player, Long> cooldowns = new ConcurrentHashMap<>();
 
   public RankupHelper(RankupPlugin plugin) {
     this.plugin = plugin;

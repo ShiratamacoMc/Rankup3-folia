@@ -228,7 +228,7 @@ public class RankupPlugin extends JavaPlugin {
       } catch (IllegalStateException ignored) {
       }
       autoRankup = new AutoRankup(this);
-      autoRankup.runTaskTimer(this, time, time);
+      autoRankup.start(time, time);
     }
 
     if (config.getInt("version") < CONFIG_VERSION) {
@@ -307,7 +307,7 @@ public class RankupPlugin extends JavaPlugin {
     messages = YamlConfiguration.loadConfiguration(localeFile);
 
     if (init) {
-      Bukkit.getScheduler().runTask(this, () -> {
+      sh.okx.rankup.util.SchedulerUtil.runTask(this, () -> {
         refreshRanks();
         error();
       });

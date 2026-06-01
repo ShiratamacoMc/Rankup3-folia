@@ -52,7 +52,8 @@ dependencies {
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
 
     compileOnly 'org.jetbrains:annotations:22.0.0'
-    compileOnly 'org.spigotmc:spigot-api:26.1.1-R0.1-SNAPSHOT'
+    // 使用 Paper API 替代 Spigot API，Paper API 包含了 Spigot API 并支持 Folia
+    compileOnly 'io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT'
     compileOnly('com.github.Realizedd:TokenManager:3.2.4') {
         transitive = false
     }

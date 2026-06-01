@@ -53,7 +53,11 @@ public class Prestige extends Rank {
       if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
         string = PlaceholderAPI.setPlaceholders(player, string);
       }
-      Bukkit.dispatchCommand(Bukkit.getConsoleSender(), string);
+      // 在全局区域执行命令以确保 Folia 兼容性
+      String finalCommand = string;
+      sh.okx.rankup.util.SchedulerUtil.runTask(plugin, () -> {
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), finalCommand);
+      });
     }
   }
 

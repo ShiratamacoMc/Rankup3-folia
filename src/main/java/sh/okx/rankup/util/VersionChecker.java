@@ -48,7 +48,7 @@ public class VersionChecker {
       checked = true;
       callback.onPreReleaseVersion(currentVersion);
     } else {
-      Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> checkVersionAsync(callback));
+      SchedulerUtil.runAsync(plugin, () -> checkVersionAsync(callback));
     }
   }
 
@@ -144,7 +144,7 @@ public class VersionChecker {
     }
 
     private void doSync(Runnable r) {
-      Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, r);
+      SchedulerUtil.runTask(plugin, r);
     }
   }
 }
